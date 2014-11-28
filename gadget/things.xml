@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+	<ModulePrefs
+		title="Things for Gmail"
+		description="by @almeroth"
+		title_url="https://github.com/jalmeroth/gadget-things"
+		scrolling="false" 
+		height="40"
+		author="Jan Almeroth"
+		author_email="jan@almeroth.com"
+		author_location="Hamburg, Germany">
+		<Require feature="setprefs"/>
+		<Require feature="dynamic-height"/>
+		<Require feature="google.contentmatch">
+			<Param name="extractors">google.com:RawSubjectExtractor</Param>
+		</Require>
+		<UserPref name="accountId" display_name="accountId" required="true"/>
+	</ModulePrefs>
+	<Content type="html" view="card">
+		<![CDATA[
+		
+		<link href="https://gadget-things.appspot.com/gadget/things.css" media="all" rel="stylesheet" type="text/css" />
+		<script src="https://gadget-things.appspot.com/gadget/things.js" type="text/javascript" charset="utf-8"></script>
+		
+		<div id="wrapper">
+			<hr />
+			<div id="gear">
+				<a href="#" onclick="settings();" class="button" title="Settings">&nbsp;&#x2699;&nbsp;</a>
+			</div>
+			
+			<div id="settings" class="displayNone">
+				<label for="user_mail">E-Mail</label><input type="text" name="user_mail" value="" id="user_mail"><br />
+				<label for="user_pass">Password</label><input type="password" name="user_pass" value="" id="user_pass">
+				<hr />
+				<div id="logout">
+					<a href="#" onclick="login();">Logout</a>
+				</div>
+				<a href="#" onclick="cancel();" class="button">Cancel</a>&nbsp;<a href="#" onclick="login();" class="button">Login</a>
+			</div>
+			
+			<div id="statusMsg" class="displayNone">New To Do was successfully created.</div>
+			
+			<div id="newTaskSet" class="displayNone">
+				<label for="title">Title</label><input type="text" name="title" value="" id="title"><br />
+				<!-- <label for="tags">Tags</label><input type="text" name="tags" value="" id="tags"><br /> -->
+				<label for="notes">Notes</label><textarea name="notes" id="notes" rows="4" cols="30"></textarea><br />
+				<label for="duedate">Due Date</label><input type="date" name="duedate" value="" id="duedate"><br />
+				<label for="where">Where</label><select name="where" id="where" size="1">
+					<option value="INBOX">Inbox</option>
+					<option value="TODAY">Today</option>
+				</select><hr />
+				<a href="#" onclick="cancel();" class="button">Cancel</a>&nbsp;<a href="#" onclick="save();" class="button">Save</a>
+			</div>
+			
+			<div id="buttons">
+				<a href="#" onclick="newToDo();" class="button">New To Do</a>
+			</div>
+		</div>
+		
+		]]>
+	</Content>
+</Module>

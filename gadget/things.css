@@ -1,0 +1,57 @@
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+body, * {
+	font: 13px arial, sans-serif;
+	background-color: transparent;
+}
+
+a.button {
+	font-size: 11px;
+	color: #FFF;
+	background-color: rgb(77, 114, 254);
+	text-decoration: none;
+	padding: 6px 8px;
+	border: 1px solid rgb(48, 121, 237);
+	cursor: pointer;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.displayNone {
+	display: none;
+}
+
+label {
+	display: inline-block;
+	width: 7em;
+	vertical-align: middle;
+}
+
+img {
+	vertical-align: middle;
+}
+
+input, textarea, select {
+	width: 40em;
+	vertical-align: middle;
+	border: 1px solid #CCC;
+	margin-bottom: 2px;
+	padding: 1px;
+	color: #000;
+	background-color: rgb(247, 246, 237);
+}
+
+div#gear, div#logout {
+	float: right;
+	text-align: right;
+}
+
+div#statusMsg {
+	text-align: center;
+	font-weight: bold;
+	color: #000;
+	background: rgb(255, 249, 194);
+}
