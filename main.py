@@ -176,9 +176,8 @@ class MainHandler(webapp2.RequestHandler):
 		return output
 	
 	def get(self):
-		self.response.headers['Content-Type'] = 'text/plain'
-		return self.response.write("Hello world.")
-
+		return self.redirect('https://github.com/jalmeroth/gadget-things', permanent=True)
+	
 	def post(self):
 		body = self.request.body
 		data = json.loads(body)
