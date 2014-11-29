@@ -224,7 +224,7 @@ function login(obj) {
 		
 		if (user_mail && user_pass) { // trying to login
 		
-			logging(user_mail + "/" + user_pass);
+			// logging(user_mail + "/" + user_pass);
 		
 			var headers = {
 				"Content-Type" : "application/json",
