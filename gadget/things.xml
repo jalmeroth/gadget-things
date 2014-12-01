@@ -19,8 +19,103 @@
 	<Content type="html" view="card">
 		<![CDATA[
 		
-		<link href="https://gadget-things.appspot.com/gadget/things.css" media="all" rel="stylesheet" type="text/css" />
-		<script src="https://gadget-things.appspot.com/gadget/things.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			
+			var nocache, root;
+			var createElementFunc, getLocation, finalUrl;
+			
+			window.onload = function () {
+				
+				createElementFunc = function(obj) {
+					//console.log(obj);
+					
+					for (var elementName in obj) {
+						
+						var node = document.createElement(elementName);
+						var attrs = obj[elementName];
+						
+						for (var attName in attrs) {
+							var att = document.createAttribute(attName);
+							att.value = attrs[attName] || null;
+							node.setAttributeNode(att);
+						}
+						
+						return node;
+					}
+				};
+				
+				getLocation = function(href) {
+					var l = document.createElement("a");
+					l.href = href;
+					return l;
+				};
+			
+				finalUrl = function(url, force) {
+					var force = force || false;
+					var cache = nocache || false;
+				
+					if(cache || force) {
+						//console.log("Move along, no caching here.");
+					
+						var ts = new Date().getTime();
+						var sep = "?";
+					
+						if (url.indexOf("?") > -1) {
+							sep = "&";
+						}
+					
+						url = [ url, sep, "nocache=", ts ].join("");
+						// logging(url);
+					}
+				
+					return url;
+				};
+				
+				var params = gadgets.util.getUrlParameters();
+				
+				nocache = params['nocache'] || false;
+				
+				var gadgetUri = params['url'] || "https://gadget-things.appspot.com/gadget/things.xml";
+				
+				if(gadgetUri) {
+					
+					//console.log(finalUrl(gadgetUri));
+					
+					var l = getLocation(gadgetUri);
+					//console.log(l);
+					
+					root = l.origin;
+					
+					var scriptFile = "/gadget/things.js";
+					var styleFile = "/gadget/things.css";
+					
+					var scriptObj = { "script": {
+						"src": finalUrl(root+scriptFile),
+						"type": "text/javascript",
+						"charset": "utf-8"
+					}};
+					
+					var script = createElementFunc(scriptObj);
+					
+					var styleObj = { "link": {
+						"href": finalUrl(root+styleFile),
+						"media": "all",
+						"rel": "stylesheet",
+						"type": "text/css"
+					}};
+					
+					var link = createElementFunc(styleObj);
+					
+					var head = document.getElementsByTagName('head')[0];
+					//console.log(head);
+					
+					head.appendChild(script);
+					head.appendChild(link);
+					
+				}
+				
+			};
+		</script>
 		
 		<div id="wrapper">
 			<hr />

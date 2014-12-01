@@ -1,4 +1,5 @@
 var prefs = new gadgets.Prefs();
+var params = gadgets.util.getUrlParameters();
 
 function adjustHeight(){
 	
@@ -91,7 +92,7 @@ function save(obj) {
 		// logging(gadgets.json.stringify(items));
 		
 		var accountId = prefs.getString("accountId");
-		var url = "https://gadget-things.appspot.com/";
+		var url = root || "https://gadget-things.appspot.com/";
 
 		var postdata = {};
 		
@@ -102,7 +103,7 @@ function save(obj) {
 		
 		var headers = {};
 		
-		makePOSTRequest(url, data, headers, save, true);
+		makePOSTRequest(url, data, headers, save);
 	
 	} else {
 		
@@ -123,7 +124,7 @@ function save(obj) {
 }
 
 function setAccount(accountId) {
-	logging('Setting account: '+ accountId);
+	// logging('Setting account: '+ accountId);
 	return prefs.set("accountId", accountId);
 }
 
@@ -131,30 +132,14 @@ function logging(message) {
 	return console.log(message);
 }
 
-function nocache(url) {
-	var ts = new Date().getTime();
-	var sep = "?";
-	
-	if (url.indexOf("?") > -1) {
-		sep = "&";
-	}
-	
-	url = [ url, sep, "nocache=", ts ].join("");
-	// logging(url);
-	
-	return url;
-}
-
-function makeGETRequest(url, headers, callback, nocaching) {
+function makeGETRequest(url, headers, callback) {
 	var params = {};
 
 	if(!callback) {
 		var callback = parseResponse;
 	}
 	
-	if (nocaching) {
-		url = nocache(url);
-	}
+	url = finalUrl(url, true);
 	
 	params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
 	params[gadgets.io.RequestParameters.HEADERS] = headers;
@@ -163,16 +148,14 @@ function makeGETRequest(url, headers, callback, nocaching) {
 	return;
 }
 
-function makePOSTRequest(url, postdata, headers, callback, nocaching) {
+function makePOSTRequest(url, postdata, headers, callback) {
 	var params = {};
 	
 	if(!callback) {
 		var callback = parseResponse;
 	}
 	
-	if (nocaching) {
-		url = nocache(url);
-	}
+	url = finalUrl(url, true);
 	
 	params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
 	params[gadgets.io.RequestParameters.HEADERS] = headers;
@@ -233,7 +216,7 @@ function login(obj) {
 		
 			var url = "https://thingscloud.appspot.com/version/1/account/" + user_mail + "/own-history-keys";
 		
-			makeGETRequest(url, headers, login, true);
+			makeGETRequest(url, headers, login);
 		
 		} else { // trying to logout
 			setAccount('');
@@ -254,11 +237,9 @@ function login(obj) {
 	return;
 }
 
-function initialize() {
+function initialize(msg) {
 	toggle({'buttons': true});
 	return;
 }
 
-window.onload = function () {
-	initialize();
-};
+initialize();
